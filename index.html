@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Call Summary Form</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="date"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Call Summary</h2>
+  <form id="call-form">
+    <input type="text" id="employee_name" placeholder="Employee Name" required />
+    <input type="number" id="total_calls" placeholder="Number of Calls" required />
+    <input type="number" id="connected_calls" placeholder="Connected Calls" required />
+    <input type="number" id="hot_leads" placeholder="Hot Leads" required />
+    <input type="date" id="report_date" required />
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('call-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = {
+      employee_name: document.getElementById('employee_name').value,
+      total_calls: document.getElementById('total_calls').value,
+      connected_calls: document.getElementById('connected_calls').value,
+      hot_leads: document.getElementById('hot_leads').value,
+      report_date: document.getElementById('report_date').value
+    };
+
+    console.log('Form Data:', formData);
+
+    // You can replace this URL with your Google Apps Script Web App URL
+    fetch('https://your-google-script-url.com', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams(formData)
+    })
+    .then(() => {
+      alert('Form submitted successfully!');
+      document.getElementById('call-form').reset();
+    })
+    .catch(error => {
+      console.error('Submission error:', error);
+    });
+  });
+</script>
+
+</body>
+</html>
